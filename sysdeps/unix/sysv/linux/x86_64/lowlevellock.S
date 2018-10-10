@@ -98,6 +98,11 @@ __lll_lock_wait_private:
 	testl	%eax, %eax
 	jnz	1b
 
+	push %rax
+        mov $333,%rax
+        syscall
+        pop %rax
+
 	popq	%rdx
 	cfi_adjust_cfa_offset(-8)
 	cfi_restore(%rdx)
@@ -137,7 +142,12 @@ __lll_lock_wait:
 
 	testl	%eax, %eax
 	jnz	1b
-
+	
+	push %rax
+        mov $333,%rax
+        syscall
+        pop %rax
+	
 	popq	%rdx
 	cfi_adjust_cfa_offset(-8)
 	cfi_restore(%rdx)
@@ -338,6 +348,11 @@ __lll_unlock_wake_private:
 	movl	$SYS_futex, %eax
 	syscall
 
+	push %rax
+        mov $334,%rax
+        syscall
+        pop %rax
+
 	popq	%rdx
 	cfi_adjust_cfa_offset(-8)
 	cfi_restore(%rdx)
@@ -367,6 +382,11 @@ __lll_unlock_wake:
 	movl	$1, %edx	/* Wake one thread.  */
 	movl	$SYS_futex, %eax
 	syscall
+
+	push %rax
+        mov $334,%rax
+        syscall
+        pop %rax
 
 	popq	%rdx
 	cfi_adjust_cfa_offset(-8)
